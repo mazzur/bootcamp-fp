@@ -10,6 +10,10 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
+store.subscribe(() => {
+    console.log('state changed', store.getState());
+});
+
 const commands = {
     state() {
         console.log(Immutable.fromJS(store.getState()).toJS());
@@ -28,6 +32,10 @@ const commands = {
     action() {
         rl.question('action type>', (type) => {
             rl.question('action payload (JSON)>', (jsonPayload) => {
+                if (!jsonPayload) {
+                    return;
+                }
+
                 const payload = JSON.parse(jsonPayload.trim());
                 store.dispatch({
                     type,

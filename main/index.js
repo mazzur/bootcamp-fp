@@ -1,10 +1,11 @@
 const Immutable = require('immutable');
+const combineReducers = require('../lib/combine-reducers');
 
-module.exports = (state = {}, action) => ({
-    trainees: traineesReducer(state.trainees, action),
-    trainers: trainersReducer(state.trainers, action),
-    workshops: workshopReducer(state.workshops, action),
-    history: historyReducer(state.history, action)
+module.exports = combineReducers({
+    trainees,
+    trainers,
+    workshop,
+    history
 });
 
 const ACTIONS = {
@@ -19,7 +20,7 @@ const ACTIONS = {
     FILL_IN_TRAINEES_ATTENDANCE: 'FILL_IN_TRAINEES_ATTENDANCE'
 };
 
-function traineesReducer(state = Immutable.List(), action) {
+function trainees(state = Immutable.List(), action) {
     switch (action.type) {
     case ACTIONS.ADD_TRAINEE:
         return state.push(action.payload);
@@ -30,7 +31,7 @@ function traineesReducer(state = Immutable.List(), action) {
     }
 }
 
-function trainersReducer(state = Immutable.List(), action) {
+function trainers(state = Immutable.List(), action) {
     switch (action.type) {
     case ACTIONS.ADD_TRAINER:
         return state.push(action.payload);
@@ -46,7 +47,7 @@ const STATUS = {
     IN_PROGRESS: 'IN_PROGRESS',
     FINISHED: 'FINISHED'
 };
-function workshopReducer(state = Immutable.List(), action) {
+function workshop(state = Immutable.List(), action) {
     switch (action.type) {
     case ACTIONS.ADD_WORKSHOP:
         const workshop = Immutable.Map(Object.assign({
@@ -72,7 +73,7 @@ function workshopReducer(state = Immutable.List(), action) {
     }
 }
 
-function historyReducer(state = [], action) {
+function history(state = [], action) {
     state.push(action);
     return state;
 }
