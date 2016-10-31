@@ -1,4 +1,5 @@
 const chai = require('chai');
+const sinon = require('sinon');
 const expect = chai.expect;
 const createStore = require('../lib/create-store');
 const reducers = require('../main');
@@ -37,6 +38,15 @@ describe('bootcamp state management module', () => {
 
             expect(store.getState().trainees.toJS()).to.be.empty;
         });
+    });
+
+    xit('should not notify observers if state did not change', () => {
+        const storeSubscriber = sinon.spy();
+        store.subscribe(storeSubscriber);
+        store.dispatch({
+            type: 'NON_EXISTING_ACTION'
+        });
+        expect(storeSubscriber.called).to.equal(false);
     });
 
     xdescribe('providing trainers management feature', () => {

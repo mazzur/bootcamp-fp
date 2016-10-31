@@ -20,13 +20,13 @@ const commands = {
     },
     new_trainer() {
         rl.question('name>', (name) => {
-                store.dispatch({
-                    type: 'ADD_TRAINER',
-                    payload: {
-                        id: Math.random(),
-                        name: name.trim()
-                    }
-                });
+            store.dispatch({
+                type: 'ADD_TRAINER',
+                payload: {
+                    id: Math.random(),
+                    name: name.trim()
+                }
+            });
         });
     },
     action() {
@@ -52,6 +52,16 @@ const commands = {
             });
             console.log(travelStore.getState());
         });
+    },
+    help() {
+        console.log(`
+        Available commands:
+        state - get current state
+        new_trainer - add new Trainer
+        action - propagate custom action
+        timetravel - get the state at some point in time
+        help - get available commands
+        `);
     }
 };
 
@@ -59,5 +69,7 @@ rl.on('line', (line) => {
     const command = line.trim();
     commands[command]
         ? commands[command]()
-        : console.log('no such command');
+        : (() => { console.log('no such command'); commands.help();})();
 });
+
+commands.help();
