@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --harmony-default-parameters
 
 'use strict';
 const readline = require('readline');
